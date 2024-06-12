@@ -1,3 +1,5 @@
+const { version } = require("chai")
+
 require("@nomiclabs/hardhat-waffle")
 require("hardhat-gas-reporter")
 require("@nomiclabs/hardhat-etherscan")
@@ -38,6 +40,9 @@ module.exports = {
             },
             {
                 version: "0.6.6",
+            },
+            {
+                version: "0.8.20",
             },
         ],
     },
