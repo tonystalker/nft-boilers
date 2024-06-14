@@ -1,6 +1,7 @@
 const { network } = require("hardhat")
 const { developmentChains, networkConfig } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
+const { storeImage } = require("../utils/uploadToPinata")
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log } = deployments
@@ -9,7 +10,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     let tokenUris
     if (process.env.UPLOAD_to_PINATA === "true") {
-        to
+        tokenUris = await handleTokenUris()
     }
     let VRFCoordinatorV2Address, subscriptionId
     if (developmentChains.includes(network.name)) {
@@ -23,12 +24,19 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         subscriptionId = networkConfig[chainId].subscriptionId
     }
     log("----------------------------------------------------")
-    const arguments = [
+    await storeImage("./images/random")
+    /*  const arguments = [
         VRFCoordinatorV2Address,
         subscriptionId,
         networkConfig[chainId]["gasLane"],
         networkConfig[chainId]["mintFee"],
         networkConfig[chainId]["callbackGasLimit"],
         tokenUris,
-    ]
+    ]*/
+    async function handleTokenUris() {
+        tokenUris = []
+
+        return tokenUris
+    }
 }
+module.exports.tags = ["all", "randomipfs", "main"]
